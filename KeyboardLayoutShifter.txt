@@ -1,0 +1,85 @@
+A small project of mine: A better applet to select (and see!) what keyboard
+layout you are using in your GNOME session: KeyboardLayoutShifter
+
+I spend more time on writing this text than on the applet itself, so use at your
+own risk :).
+
+Hugo Buddelmeijer
+keyboardlayoutshifter@hugo.doemaarwat.nl
+
+
+** Default keyboard layout indicator **
+
+The current GNOME keyboard layout indicator has some problems:
++ In gnome-terminal ctrl- keystrokes are taken from the first layout in the
+  list. So if you use two or more layouts, you should rearrange the order every
+  time you want to switch.
++ It doesn't actually indicate which layout you use. I've got two layouts,
+  dvorak and US international. Both list as 'USA', which makes the 'indicator'
+  aspect useless.
+
+The GNOME community seems to be divided about these issues, and it might
+not be fixed soon. See https://bugzilla.gnome.org/show_bug.cgi?id=162726
+
+
+** The Keyboard Layout Shifter **
+
+I have thought about learning how to make a panel applet before, and this seemed
+to be the perfect opportunity. So I put together a small python applet that
+cycles ('shifts') through the list of layouts listed in gconf. The used one is
+always on the top so you can use your ctrl- keystrokes. Plus, it actually shows
+you what layout you have chosen!
+
+
+** Installing **
+
+There are three files in the tarball, that you have to copy manually.
++ GNOME_KeyboardLayoutShifter_Factory.server 
+  contains the definition of the applet and goes into 
+  /usr/lib/bonobo/servers
++ KeyboardLayoutShifter.py 
+  is the actual program and goes into 
+  /usr/local/bin 
++ KeyboardLayoutShifter.txt 
+  is this text file.
+
+Just put the 2 files in the tarball in their respective positions, add the
+applet somewhere, and you're good to go! Like
+
+ tar -xzvf KeyboardLayoutShifter-0.1.tar.gz
+ cd KeyboardLayoutShifter-0.1
+ sudo cp -avi GNOME_KeyboardLayoutShifter_Factory.server /usr/lib/bonobo/servers
+ sudo cp -avi KeyboardLayoutShifter.py /usr/local/bin
+
+Or you can try out the applet by running the python script (with -d).
+
+
+** Acknowledgements **
+
+I never had made a GNOME applet before, let alone a slightly useful one. The
+blog posts of these two people helped me on my way. Actually, you could say it
+is just a mashup of their examples :).
+
+http://saravananthirumuruganathan.wordpress.com/2010/01/15/creating-gnome-panel-applets-in-python/
+ "Creating GNOME Panel Applets in Python"
+ by Saravanan Thirumuruganathan
+
+http://therning.org/magnus/archives/57
+ "GConf in Python"
+ by Per Magnus Therning
+
+Nice sidenote: Originally I just edited the HinduScroller that presented random
+english-hindu words every 10 seconds but in such a way that it changed my
+keyboard layout every 10 seconds :(.
+
+
+** Issues **
+
+The applet kinda works. Good enough. For me. YMMV. Will vary. Feel free to pick
+up these points, I probably will not take the time to fix them.
+
++ It doesn't collaborate with the regular keyboard switcher. Ensure that that
+  one is set to use the first layout and do not touch it again.
++ Being just a button, you could not move it. So I added a widget with my
+  initials that you can right-click on. It looks kinda ugly as well.
+
